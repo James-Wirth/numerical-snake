@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -140,94 +140,94 @@ namespace Snake
         }
 
         public static void gameOver(){
-            Console.Clear();
-            gameInProgress = false;
+            	Console.Clear();
+            	gameInProgress = false;
 
-            Console.WriteLine("Your Score: " + snakeLength);
+            	Console.WriteLine("Your Score: " + snakeLength);
         }
 
         public static void targetFound(){
-			snakeLength++;
-			generateTarget();
+		snakeLength++;
+		generateTarget();
 
-			for (int i = 0; i < Consts.gridHeight; i++)
-			{
-				for (int j = 0; j < Consts.gridWidth; j++)
-				{
-                    			if(grid[i,j] != snakeLength && grid[i,j] > 0 && grid[i,j] != Consts.targetIdentifier){
-                        			grid[i, j]++;
-                    			}
-				}
-			}
-
-            		grid[lastx, lasty] = 1;
-        }
-
-		public static void generateTarget()
+		for (int i = 0; i < Consts.gridHeight; i++)
 		{
-			Random random = new Random();
-            		targetRow = random.Next(0, Consts.gridHeight-1);
-            		targetCol = random.Next(0, Consts.gridWidth-1);
-
-			grid[targetRow, targetCol] = Consts.targetIdentifier;
+			for (int j = 0; j < Consts.gridWidth; j++)
+			{
+                    		if(grid[i,j] != snakeLength && grid[i,j] > 0 && grid[i,j] != Consts.targetIdentifier){
+                        		grid[i, j]++;
+                    		}
+			}
 		}
 
+            	grid[lastx, lasty] = 1;
+        }
+
+	public static void generateTarget()
+	{
+		Random random = new Random();
+            	targetRow = random.Next(0, Consts.gridHeight-1);
+            	targetCol = random.Next(0, Consts.gridWidth-1);
+
+		grid[targetRow, targetCol] = Consts.targetIdentifier;
+	}
+
         public static void getInputs(){
-            while(true){
+            	while(true){
 
-                ConsoleKeyInfo key = new ConsoleKeyInfo();
-                key = Console.ReadKey();
+                	ConsoleKeyInfo key = new ConsoleKeyInfo();
+                	key = Console.ReadKey();
 
-               switch(key.Key){
-                    case ConsoleKey.W:
-                        direction = 0;
-                        break;
-		    case ConsoleKey.S:
-			direction = 1;
-			break;
-		    case ConsoleKey.A:
-			direction = 2;
-			break;
-		    case ConsoleKey.D:
-			direction = 3;
-			break;
-                }
-            }
+               		switch(key.Key){
+                    		case ConsoleKey.W:
+                        		direction = 0;
+                        		break;
+		    		case ConsoleKey.S:
+					direction = 1;
+					break;
+		    		case ConsoleKey.A:
+					direction = 2;
+					break;
+		    		case ConsoleKey.D:
+					direction = 3;
+					break;
+                	}
+            	}
         }
 
         public static void display(){
-            Console.Clear();
-			for (int i = 0; i < Consts.gridHeight; i++)
-			{
-				for (int j = 0; j < Consts.gridWidth; j++)
-                		{
-                    			if (grid[i, j] == Consts.targetIdentifier)
-                    			{
-                        			Console.ForegroundColor = ConsoleColor.Green;
-                        			Console.Write(" X ");
-                    			}
-                    			else
-                    			{
-                        			if (grid[i, j] > 0)
-                        			{
-                            				Console.ForegroundColor = ConsoleColor.Yellow;
-                        			}
-                        			else
-                        			{
-                            				Console.ForegroundColor = ConsoleColor.DarkGray;
-                        			}			
+            	Console.Clear();
+		for (int i = 0; i < Consts.gridHeight; i++)
+		{
+			for (int j = 0; j < Consts.gridWidth; j++)
+                	{
+                    		if (grid[i, j] == Consts.targetIdentifier)
+                    		{
+                        		Console.ForegroundColor = ConsoleColor.Green;
+                        		Console.Write(" X ");
+                    		}
+                    		else
+                    		{
+                        		if (grid[i, j] > 0)
+                        		{
+                            			Console.ForegroundColor = ConsoleColor.Yellow;
+                        		}
+                        		else
+                        		{
+                            			Console.ForegroundColor = ConsoleColor.DarkGray;
+                        		}			
 
-                        			if (grid[i, j] < 10)
-                        			{
-                            				Console.Write(string.Format(" {0} ", grid[i, j]));
-                        			}
-                        			else{
-                            				Console.Write(string.Format(" {0}", grid[i, j]));
-                        			}
-                    			}
-				}
-				Console.Write(Environment.NewLine + Environment.NewLine);
+                        		if (grid[i, j] < 10)
+                        		{
+                            			Console.Write(string.Format(" {0} ", grid[i, j]));
+                        		}
+                        		else{
+                            			Console.Write(string.Format(" {0}", grid[i, j]));
+                        		}
+                    		}
 			}
+			Console.Write(Environment.NewLine + Environment.NewLine);
+		}
         }
 
     }
