@@ -22,7 +22,7 @@ namespace Snake
 
         static bool gameInProgress = true;
 
-		static int[,] grid = new int[30, 30];
+	static int[,] grid = new int[30, 30];
         static int snakeLength = 1;
 
         static int currentRow = 0;
@@ -42,101 +42,101 @@ namespace Snake
         }
 
         public static void playGame(){
-			Thread keyThread = new Thread(new ThreadStart(getInputs));
-			keyThread.Start();
+		Thread keyThread = new Thread(new ThreadStart(getInputs));
+		keyThread.Start();
 
-			generateTarget();
+		generateTarget();
 
-			grid[currentRow, currentCol] = snakeLength;
-			display();
+		grid[currentRow, currentCol] = snakeLength;
+		display();
 
-			while (gameInProgress)
+		while (gameInProgress)
+		{
+			//Change the position of the first block and check whether it has hit the target, or itself/the game bounds (in which case the game ends)
+			switch (direction)
 			{
-				//Change the position of the first block and check whether it has hit the target, or itself/the game bounds (in which case the game ends)
-				switch (direction)
-				{
-					case 0:
-						if ((currentCol == targetCol) && (currentRow - 1 == targetRow))
-						{
-							targetFound();
-						}
-						else if (currentRow == 0 || grid[currentRow - 1, currentCol] > 0)
-						{
-                            gameOver();
-                            break;
-						}
-						grid[currentRow - 1, currentCol] = snakeLength;
-						currentRow--;
-						break;
+				case 0:
+					if ((currentCol == targetCol) && (currentRow - 1 == targetRow))
+					{
+						targetFound();
+					}
+					else if (currentRow == 0 || grid[currentRow - 1, currentCol] > 0)
+					{
+                            			gameOver();
+                            			break;
+					}
+					grid[currentRow - 1, currentCol] = snakeLength;
+					currentRow--;
+					break;
 
-					case 1:
-						if ((currentCol == targetCol) && (currentRow + 1 == targetRow))
-						{
-							targetFound();
-						}
-						else if (currentCol == Consts.gridHeight-1 || grid[currentRow + 1, currentCol] > 0)
-						{
-							gameOver();
-                            break;
-						}
-						grid[currentRow + 1, currentCol] = snakeLength;
-						currentRow++;
-						break;
+				case 1:
+					if ((currentCol == targetCol) && (currentRow + 1 == targetRow))
+					{
+						targetFound();
+					}
+					else if (currentCol == Consts.gridHeight-1 || grid[currentRow + 1, currentCol] > 0)
+					{
+						gameOver();
+                           			break;
+					}
+					grid[currentRow + 1, currentCol] = snakeLength;
+					currentRow++;
+					break;
 
-					case 2:
-						if ((currentCol - 1 == targetCol) && (currentRow == targetRow))
-						{
-							targetFound();
-						}
-						else if (currentCol == 0 || grid[currentRow, currentCol - 1] > 0)
-						{
-							gameOver();
-                            break;
-						}
-						grid[currentRow, currentCol - 1] = snakeLength;
-						currentCol--;
-						break;
+				case 2:
+					if ((currentCol - 1 == targetCol) && (currentRow == targetRow))
+					{
+						targetFound();
+					}
+					else if (currentCol == 0 || grid[currentRow, currentCol - 1] > 0)
+					{
+						gameOver();
+                            			break;
+					}
+					grid[currentRow, currentCol - 1] = snakeLength;
+					currentCol--;
+					break;
 
-					case 3:
-						if ((currentCol + 1 == targetCol) && (currentRow == targetRow))
-						{
-							targetFound();
-						}
-						else if (currentCol == Consts.gridWidth-1 || grid[currentRow, currentCol + 1] > 0)
-						{
-							gameOver();
-                            break;
-						}
-						grid[currentRow, currentCol + 1] = snakeLength;
-						currentCol++;
-						break;
-				}
-
-                if (gameInProgress)
-                {
-                    //Display the updated positions
-                    display();
-
-                    //Decrement each visible block > 0
-                    for (int i = 0; i < Consts.gridHeight; i++)
-                    {
-                        for (int j = 0; j < Consts.gridWidth; j++)
-                        {
-                            if ((grid[i, j] > 0 && grid[i, j] != Consts.targetIdentifier))
-                            {
-                                if (grid[i, j] == 1)
-                                {
-                                    lastx = i;
-                                    lasty = j;
-                                }
-
-                                grid[i, j]--;
-                            }
-                        }
-                    }
-                    Thread.Sleep(200);
-                }
+				case 3:
+					if ((currentCol + 1 == targetCol) && (currentRow == targetRow))
+					{
+						targetFound();
+					}
+					else if (currentCol == Consts.gridWidth-1 || grid[currentRow, currentCol + 1] > 0)
+					{
+						gameOver();
+                            			break;
+					}
+					grid[currentRow, currentCol + 1] = snakeLength;
+					currentCol++;
+					break;
 			}
+
+                	if (gameInProgress)
+                	{
+                    	//Display the updated positions
+                    	display();
+
+                    	//Decrement each visible block > 0
+                    	for (int i = 0; i < Consts.gridHeight; i++)
+                    	{
+                        	for (int j = 0; j < Consts.gridWidth; j++)
+                        	{
+                            		if ((grid[i, j] > 0 && grid[i, j] != Consts.targetIdentifier))
+                            		{
+                                		if (grid[i, j] == 1)
+                                		{
+                                    			lastx = i;
+                                    			lasty = j;
+                                		}
+
+                                		grid[i, j]--;
+                            		}
+                        	}
+                    	}
+                    	Thread.Sleep(200);
+               	 	}
+		}
         }
 
         public static void gameOver(){
@@ -154,23 +154,22 @@ namespace Snake
 			{
 				for (int j = 0; j < Consts.gridWidth; j++)
 				{
-                    if(grid[i,j] != snakeLength && grid[i,j] > 0 && grid[i,j] != Consts.targetIdentifier){
-                        grid[i, j]++;
-                    }
+                    			if(grid[i,j] != snakeLength && grid[i,j] > 0 && grid[i,j] != Consts.targetIdentifier){
+                        			grid[i, j]++;
+                    			}
 				}
 			}
 
-            grid[lastx, lasty] = 1;
+            		grid[lastx, lasty] = 1;
         }
 
 		public static void generateTarget()
 		{
 			Random random = new Random();
-            targetRow = random.Next(0, Consts.gridHeight-1);
-            targetCol = random.Next(0, Consts.gridWidth-1);
+            		targetRow = random.Next(0, Consts.gridHeight-1);
+            		targetCol = random.Next(0, Consts.gridWidth-1);
 
 			grid[targetRow, targetCol] = Consts.targetIdentifier;
-
 		}
 
         public static void getInputs(){
@@ -183,15 +182,15 @@ namespace Snake
                     case ConsoleKey.W:
                         direction = 0;
                         break;
-					case ConsoleKey.S:
-						direction = 1;
-						break;
-					case ConsoleKey.A:
-						direction = 2;
-						break;
-					case ConsoleKey.D:
-						direction = 3;
-						break;
+		    case ConsoleKey.S:
+			direction = 1;
+			break;
+		    case ConsoleKey.A:
+			direction = 2;
+			break;
+		    case ConsoleKey.D:
+			direction = 3;
+			break;
                 }
             }
         }
@@ -201,31 +200,31 @@ namespace Snake
 			for (int i = 0; i < Consts.gridHeight; i++)
 			{
 				for (int j = 0; j < Consts.gridWidth; j++)
-                {
-                    if (grid[i, j] == Consts.targetIdentifier)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(" X ");
-                    }
-                    else
-                    {
-                        if (grid[i, j] > 0)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.DarkGray;
-                        }
+                		{
+                    			if (grid[i, j] == Consts.targetIdentifier)
+                    			{
+                        			Console.ForegroundColor = ConsoleColor.Green;
+                        			Console.Write(" X ");
+                    			}
+                    			else
+                    			{
+                        			if (grid[i, j] > 0)
+                        			{
+                            				Console.ForegroundColor = ConsoleColor.Yellow;
+                        			}
+                        			else
+                        			{
+                            				Console.ForegroundColor = ConsoleColor.DarkGray;
+                        			}			
 
-                        if (grid[i, j] < 10)
-                        {
-                            Console.Write(string.Format(" {0} ", grid[i, j]));
-                        }
-                        else{
-                            Console.Write(string.Format(" {0}", grid[i, j]));
-                        }
-                    }
+                        			if (grid[i, j] < 10)
+                        			{
+                            				Console.Write(string.Format(" {0} ", grid[i, j]));
+                        			}
+                        			else{
+                            				Console.Write(string.Format(" {0}", grid[i, j]));
+                        			}
+                    			}
 				}
 				Console.Write(Environment.NewLine + Environment.NewLine);
 			}
