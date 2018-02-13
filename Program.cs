@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 namespace Snake
 {
-    public class Consts{
+    public class Consts
+    {
         public const int gridWidth = 20;
         public const int gridHeight = 10;
 
@@ -19,7 +20,6 @@ namespace Snake
 
     class MainClass
     {
-
         static bool gameInProgress = true;
 
 	static int[,] grid = new int[30, 30];
@@ -38,10 +38,11 @@ namespace Snake
 
         public static void Main(string[] args)
         {
-            playGame();
+            	playGame();
         }
 
-        public static void playGame(){
+        public static void playGame()
+	{
 		Thread keyThread = new Thread(new ThreadStart(getInputs));
 		keyThread.Start();
 
@@ -139,14 +140,16 @@ namespace Snake
 		}
         }
 
-        public static void gameOver(){
+        public static void gameOver()
+	{
             	Console.Clear();
             	gameInProgress = false;
 
             	Console.WriteLine("Your Score: " + snakeLength);
         }
 
-        public static void targetFound(){
+        public static void targetFound()
+	{
 		snakeLength++;
 		generateTarget();
 
@@ -172,7 +175,8 @@ namespace Snake
 		grid[targetRow, targetCol] = Consts.targetIdentifier;
 	}
 
-        public static void getInputs(){
+        public static void getInputs()
+	{
             	while(true){
 
                 	ConsoleKeyInfo key = new ConsoleKeyInfo();
@@ -195,7 +199,8 @@ namespace Snake
             	}
         }
 
-        public static void display(){
+        public static void display()
+	{
             	Console.Clear();
 		for (int i = 0; i < Consts.gridHeight; i++)
 		{
